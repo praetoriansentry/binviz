@@ -29,7 +29,13 @@ type (
 
 func main() {
 	log.Println("Test")
-	bin, err := ioutil.ReadFile("main")
+	if len(os.Args) != 3 {
+		log.Fatal("usage: ./binviz infile outimage")
+	}
+	infile := os.Args[1]
+	outfile := os.Args[2]
+
+	bin, err := ioutil.ReadFile(infile)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -96,7 +102,7 @@ func main() {
 		img.Set(coord.X, coord.Y, c)
 	}
 
-	f, err := os.Create("img.png")
+	f, err := os.Create(outfile)
 	if err != nil {
 		log.Fatal(err)
 	}
